@@ -1,6 +1,9 @@
 fn main {
-  let sample = "MoonBit makes tools\nTools should be small and useful"
-  let report = @analytics.analyze(sample)
+  let input = match @env.get_env_var("MOONPULSE_INPUT") {
+    Some(text) => text
+    None => "MoonBit makes tools\nTools should be small and useful"
+  }
+  let report = @analytics.analyze(input)
   println("MoonPulse text report")
   println("lines: " + report.lines.to_string())
   println("words: " + report.words.to_string())

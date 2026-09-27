@@ -43,3 +43,13 @@ moon run cmd\moonpulse
 ## 许可证
 
 MIT
+
+### 从文件分析
+
+PowerShell 用户可以直接分析本地文件：
+
+```powershell
+.\scripts\moonpulse.ps1 .\README.md
+```
+
+脚本会读取文件内容并交给 MoonBit 分析器；文件不存在时返回错误，不会静默使用示例文本。
