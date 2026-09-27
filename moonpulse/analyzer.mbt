@@ -6,10 +6,25 @@ pub struct Report {
   top_words : Array[(String, Int)]
 }
 
+fn normalize(word : String) -> String {
+  String::from_iter(word.iter().map(c => c.to_ascii_lowercase()))
+}
+
+fn clean(input : String) -> String {
+  input
+    .replace(old=",", new=" ")
+    .replace(old=".", new=" ")
+    .replace(old="!", new=" ")
+    .replace(old="?", new=" ")
+    .replace(old=";", new=" ")
+    .replace(old=":", new=" ")
+    .replace(old="(", new=" ")
+    .replace(old=")", new=" ")
+}
+
 fn add_word(counts : Map[String, Int], word : String) -> Unit {
-  if word.trim() != "" {
-    counts[word] = counts.get(word).unwrap_or(0) + 1
-  }
+  let key = normalize(word.trim().to_owned())
+  if key != "" { counts[key] = counts.get(key).unwrap_or(0) + 1 }
 }
 
 pub fn analyze(input : String) -> Report {
@@ -19,26 +34,20 @@ pub fn analyze(input : String) -> Report {
   let counts = Map([])
   for line in lines {
     if line.trim() != "" { non_empty += 1 }
-    for token in line.split(" ") {
-      let word = token.trim().to_owned()
-      if word != "" {
+    for token in clean(line.to_owned()).split(" ") {
+      if token.trim() != "" {
         words += 1
-        add_word(counts, word)
+        add_word(counts, token.to_owned())
       }
     }
   }
   let ranked = []
   for (word, count) in counts { ranked.push((word, count)) }
-  ranked.sort_by(fn(a, b) { b.1 - a.1 })
-  Report::{
-    lines: non_empty,
-    words,
-    characters: input.length(),
-    non_empty_lines: non_empty,
-    top_words: ranked,
-  }
+  ranked.sort_by(fn(a, b) {
+    let by_count = b.1 - a.1
+    if by_count == 0 { a.0.compare(b.0) } else { by_count }
+  })
+  Report::{ lines: non_empty, words, characters: input.length(), non_empty_lines: non_empty, top_words: ranked }
 }
-
-
 
 

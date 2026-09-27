@@ -11,8 +11,9 @@ test "analyze handles blank input" {
   inspect(report.non_empty_lines, content="0")
 }
 
-test "analyze returns word frequencies" {
-  let report = @moonpulse.analyze("MoonBit MoonBit tools")
-  inspect(report.top_words.length(), content="2")
+test "analyze normalizes whitespace case and punctuation" {
+  let report = @moonpulse.analyze("MoonBit, MOONBIT\t tools!")
+  inspect(report.words, content="3")
+  inspect(report.top_words[0].0, content="moonbit")
   inspect(report.top_words[0].1, content="2")
 }
