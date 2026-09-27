@@ -4,10 +4,15 @@ fn main {
     None => "MoonBit makes tools\nTools should be small and useful"
   }
   let report = @analytics.analyze(input)
-  println("MoonPulse text report")
-  println("lines: " + report.lines.to_string())
-  println("words: " + report.words.to_string())
-  println("characters: " + report.characters.to_string())
-  println("non-empty lines: " + report.non_empty_lines.to_string())
-  println("unique words: " + report.top_words.length().to_string())
+  match @env.get_env_var("MOONPULSE_FORMAT") {
+    Some(format) if format == "json" => println(@analytics.report_json(report))
+    _ => {
+      println("MoonPulse text report")
+      println("lines: " + report.lines.to_string())
+      println("words: " + report.words.to_string())
+      println("characters: " + report.characters.to_string())
+      println("non-empty lines: " + report.non_empty_lines.to_string())
+      println("unique words: " + report.top_words.length().to_string())
+    }
+  }
 }

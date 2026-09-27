@@ -17,3 +17,8 @@ test "analyze normalizes whitespace case and punctuation" {
   inspect(report.top_words[0].0, content="moonbit")
   inspect(report.top_words[0].1, content="2")
 }
+test "report_json contains stable fields" {
+  let json = @moonpulse.report_json(@moonpulse.analyze("MoonBit MoonBit tools"))
+  inspect(json, content="{\"lines\":1,\"words\":3,\"characters\":23,\"non_empty_lines\":1,\"top_words\":[{\"word\":\"moonbit\",\"count\":2},{\"word\":\"tools\",\"count\":1}]}")
+}
+

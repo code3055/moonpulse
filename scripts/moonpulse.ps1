@@ -1,6 +1,7 @@
 param(
   [Parameter(Mandatory=$true, Position=0)]
-  [string]$Path
+  [string]$Path,
+  [switch]$Json
 )
 
 if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) {
@@ -9,9 +10,11 @@ if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) {
 }
 
 $env:MOONPULSE_INPUT = Get-Content -LiteralPath $Path -Raw
+if ($Json) { $env:MOONPULSE_FORMAT = "json" }
 try {
   moon run cmd\moonpulse
   exit $LASTEXITCODE
 } finally {
   Remove-Item Env:MOONPULSE_INPUT -ErrorAction SilentlyContinue
+  Remove-Item Env:MOONPULSE_FORMAT -ErrorAction SilentlyContinue
 }

@@ -51,3 +51,13 @@ pub fn analyze(input : String) -> Report {
 }
 
 
+pub fn report_json(report : Report) -> String {
+  let mut top = "["
+  for i = 0; i < report.top_words.length(); i = i + 1 {
+    if i > 0 { top += "," }
+    let item = report.top_words[i]
+    top += "{\"word\":\"" + item.0.replace(old="\"", new="\\\"") + "\",\"count\":" + item.1.to_string() + "}"
+  }
+  top += "]"
+  "{\"lines\":" + report.lines.to_string() + ",\"words\":" + report.words.to_string() + ",\"characters\":" + report.characters.to_string() + ",\"non_empty_lines\":" + report.non_empty_lines.to_string() + ",\"top_words\":" + top + "}"
+}
