@@ -1,0 +1,5 @@
+import {
+  "moonpulse/moonpulse" @analytics
+}
+pkgtype(kind: "executable")
+
