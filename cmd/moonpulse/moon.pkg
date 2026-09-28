@@ -1,4 +1,5 @@
 import {
-  "moonpulse/moonpulse" @analytics
+  "code3055/moonpulse/moonpulse" @analytics
 }
 pkgtype(kind: "executable")
+
