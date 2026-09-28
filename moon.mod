@@ -1,6 +1,7 @@
 name = "code3055/moonpulse"
-version = "0.1.0"
+version = "0.2.0"
 readme = "README.md"
 repository = "https://github.com/code3055/moonpulse"
 license = "MIT"
 description = "A dependency-free MoonBit text analytics tool"
+

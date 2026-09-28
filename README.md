@@ -77,3 +77,29 @@ npm run dev
 ## 许可证
 
 MIT
+## 深度分析能力
+
+0.2.0 增加了可复用的质量分析模块：
+
+- 段落、标题、句子和平均句长统计
+- 词汇多样性与文本密度指标
+- 停用词过滤后的关键词提取
+- `quality_score`、质量等级、问题编码和阅读建议
+- Markdown 大纲提取与章节统计
+- Word、Number、URL、Code、Punctuation Token 分类
+- JSON、CSV、Markdown 三种报告格式
+- 报告结构校验和可追踪的测试场景
+
+核心 MoonBit 源码超过 500 行，测试覆盖空文本、标点、大小写、多段落、关键词、Token 和 Markdown 大纲等路径。
+
+```powershell
+# 默认文本报告
+moon run cmd\moonpulse
+
+# 文件 JSON 报告
+.\scripts\moonpulse.ps1 .\README.md -Json
+
+# 文件 Markdown 报告
+$env:MOONPULSE_FORMAT = "markdown"
+.\scripts\moonpulse.ps1 .\README.md
+```
