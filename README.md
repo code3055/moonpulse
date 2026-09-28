@@ -103,3 +103,21 @@ moon run cmd\moonpulse
 $env:MOONPULSE_FORMAT = "markdown"
 .\scripts\moonpulse.ps1 .\README.md
 ```
+
+## CLI 工程能力
+
+```powershell
+# 标准输入
+Get-Content .\README.md | .\scripts\moonpulse.ps1 -Stdin -Format json
+
+# 批量分析 Markdown 文件
+.\scripts\moonpulse.ps1 . -Batch -Config .\moonpulse.default.conf
+
+# 递归扫描子目录
+.\scripts\moonpulse.ps1 . -Batch -Recursive -Config .\moonpulse.default.conf
+
+# 重复运行性能基准
+.\scripts\benchmark.ps1 -Iterations 25 -Path .\README.md
+```
+
+配置文件使用简单的 `key=value` 格式，支持 `format`、`recursive`、`pattern`、`min_words`、`max_keywords` 和 `fail_on_warning`。批处理、标准输入和配置文件位于 PowerShell 适配层，MoonBit 核心保持纯函数接口，便于嵌入其他宿主。
