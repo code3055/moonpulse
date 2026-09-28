@@ -24,9 +24,9 @@ fn normalize(word : String) -> String {
 fn clean(input : String) -> String {
   input
     .replace(old=",", new=" ")
-    .replace(old=".", new=" ")
-    .replace(old="!", new=" ")
-    .replace(old="?", new=" ")
+    .replace(old=".", new=" ").replace(old=".", new=" ").replace(old=".", new=" ")
+    .replace(old="!", new=" ").replace(old="!", new=" ").replace(old="!", new=" ")
+    .replace(old="?", new=" ").replace(old="?", new=" ").replace(old="?", new=" ")
     .replace(old=";", new=" ")
     .replace(old=":", new=" ")
     .replace(old="(", new=" ")
@@ -145,7 +145,7 @@ pub fn analyze(input : String) -> Report {
   let average = if sentences == 0 { 0.0 } else { words.to_double() / sentences.to_double() }
   let diversity = if words == 0 { 0.0 } else { unique.to_double() / words.to_double() }
   Report::{
-    lines: lines.collect().length(), words, characters: input.length(), non_empty_lines: non_empty,
+    lines: input.split("\n").collect().length(), words, characters: input.length(), non_empty_lines: non_empty,
     paragraphs, headings, sentences, average_words_per_sentence: average,
     lexical_diversity: diversity, top_words, keywords: build_keywords(counts),
     warnings: build_warnings(input, words, sentences, headings),
@@ -175,6 +175,11 @@ pub fn report_json(report : Report) -> String {
   report.average_words_per_sentence.to_string() + ",\"lexical_diversity\":" +
   report.lexical_diversity.to_string() + ",\"top_words\":" + top + ",\"keywords\":" + keywords + "}"
 }
+
+
+
+
+
 
 
 

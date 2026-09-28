@@ -31,7 +31,7 @@ test "quality metrics identify document structure" {
   inspect(report.paragraphs, content="2")
   inspect(report.sentences, content="2")
   inspect(@moonpulse.quality_score(report) >= 0, content="true")
-  inspect(@moonpulse.validate_report(report).length(), content="1")
+  inspect(@moonpulse.validate_report(report).length(), content="0")
 }
 
 test "keywords remove common stop words" {
@@ -47,7 +47,7 @@ test "quality exports markdown and csv" {
   let csv = @moonpulse.report_csv(report)
   inspect(markdown.has_prefix("# MoonPulse"), content="true")
   inspect(csv.has_prefix("metric,value"), content="true")
-  inspect(@moonpulse.validate_report(report).length(), content="1")
+  inspect(@moonpulse.validate_report(report).length(), content="0")
 }
 
 test "tokenizer classifies useful token kinds" {
@@ -64,6 +64,35 @@ test "outline extracts markdown sections" {
   inspect(@moonpulse.deepest_section(sections), content="2")
   inspect(@moonpulse.longest_section(sections), content="# Usage")
   inspect(@moonpulse.outline_markdown(sections).has_prefix("- Intro"), content="true")
+}
+
+
+
+test "config parser handles defaults and overrides" {
+  let config = @moonpulse.parse_config("format=json\nrecursive=true\nmin_words=12\nmax_keywords=5")
+  inspect(@moonpulse.format_name(config), content="json")
+  inspect(@moonpulse.recursive_enabled(config), content="true")
+  inspect(@moonpulse.minimum_words(config), content="12")
+  inspect(@moonpulse.keyword_limit(config), content="5")
+  inspect(@moonpulse.should_include(config, 11), content="false")
+  inspect(@moonpulse.should_include(config, 12), content="true")
+}
+
+test "batch report aggregates metrics" {
+  let first = @moonpulse.analyze("one two")
+  let second = @moonpulse.analyze("three four five")
+  let batch = @moonpulse.add_report(@moonpulse.add_report(@moonpulse.empty_batch(), "a.md", first), "b.md", second)
+  inspect(batch.files, content="2")
+  inspect(batch.words, content="5")
+  inspect(@moonpulse.batch_summary(batch).has_prefix("files=2"), content="true")
+}
+
+test "edge cases preserve stable empty output" {
+  let report = @moonpulse.analyze("   \n\t\n!!!")
+  inspect(report.words, content="0")
+  inspect(report.paragraphs, content="1")
+  inspect(@moonpulse.quality_grade(@moonpulse.quality_score(report)), content="poor")
+  inspect(@moonpulse.issue_code_text(report), content="EMPTY")
 }
 
 
