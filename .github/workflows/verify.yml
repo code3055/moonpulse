@@ -19,6 +19,8 @@ jobs:
         run: echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
       - name: Check MoonBit project
         run: moon check
+      - name: Build MoonBit project
+        run: moon build
       - name: Run MoonBit tests
         run: moon test
 
