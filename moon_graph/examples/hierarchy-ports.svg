@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16 428 292" width="428" height="292" role="img" aria-label="platform">
+<title>platform</title>
+<defs><marker id="moon-graph-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#607088"/></marker></defs>
+<g data-node="service"><title>service</title><rect x="24" y="24" width="168" height="212" rx="6" fill="#f6f8fc" stroke="#5174a5"/>
+<text x="108" y="40" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#172b4d">处理服务</text>
+<g data-node="decode"><title>decode</title><rect x="48" y="48" width="120" height="52" rx="6" fill="#eef4ff" stroke="#5174a5"/>
+<text x="108" y="78" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#172b4d">解析请求</text>
+<circle data-port="decode-out" cx="108" cy="100" r="3" fill="#305c99"><title>decode-out</title></circle>
+</g>
+<g data-node="validate"><title>validate</title><rect x="48" y="160" width="120" height="52" rx="6" fill="#eef4ff" stroke="#5174a5"/>
+<text x="108" y="190" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#172b4d">规则检查</text>
+<circle data-port="validate-in" cx="108" cy="160" r="3" fill="#305c99"><title>validate-in</title></circle>
+</g>
+<path data-edge="inside" d="M 108 100 L 108 112 L 108 148 L 108 160 " fill="none" stroke="#607088" stroke-width="1.5" marker-end="url(#moon-graph-arrow)"><title>inside</title></path>
+<circle data-port="service-out" cx="192" cy="130" r="3" fill="#305c99"><title>service-out</title></circle>
+</g>
+<g data-node="database"><title>database</title><rect x="252" y="24" width="120" height="60" rx="6" fill="#eef4ff" stroke="#5174a5"/>
+<text x="312" y="58" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#172b4d">数据库</text>
+<circle data-port="database-in" cx="252" cy="54" r="3" fill="#305c99"><title>database-in</title></circle>
+</g>
+<path data-edge="outside" d="M 192 130 L 204 130 L 240 130 L 240 54 L 252 54 " fill="none" stroke="#607088" stroke-width="1.5" marker-end="url(#moon-graph-arrow)"><title>outside</title></path>
+</svg>
+

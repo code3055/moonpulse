@@ -1,0 +1,9 @@
+# 文本格式允许先声明边，再声明节点。
+option elk.algorithm layered
+option elk.direction RIGHT
+edge submit draft review 提交
+edge accept review publish 通过
+edge revise review draft 修改
+node draft 撰写文档
+node review 内容评审
+node publish 发布归档

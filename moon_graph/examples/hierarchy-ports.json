@@ -1,0 +1,18 @@
+{
+  "id": "platform",
+  "layoutOptions": { "elk.algorithm": "layered" },
+  "children": [
+    {
+      "id": "service", "labels": [{ "text": "处理服务" }],
+      "layoutOptions": { "elk.direction": "DOWN" },
+      "ports": [{ "id": "service-out", "layoutOptions": { "elk.port.side": "EAST" } }],
+      "children": [
+        { "id": "decode", "width": 120, "height": 52, "labels": [{ "text": "解析请求" }], "ports": [{ "id": "decode-out", "layoutOptions": { "elk.port.side": "SOUTH" } }] },
+        { "id": "validate", "width": 120, "height": 52, "labels": [{ "text": "规则检查" }], "ports": [{ "id": "validate-in", "layoutOptions": { "elk.port.side": "NORTH" } }] }
+      ],
+      "edges": [{ "id": "inside", "sources": ["decode-out"], "targets": ["validate-in"] }]
+    },
+    { "id": "database", "width": 120, "height": 60, "labels": [{ "text": "数据库" }], "ports": [{ "id": "database-in", "layoutOptions": { "elk.port.side": "WEST" } }] }
+  ],
+  "edges": [{ "id": "outside", "sources": ["service-out"], "targets": ["database-in"] }]
+}

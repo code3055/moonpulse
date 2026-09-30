@@ -1,0 +1,5 @@
+import {
+  "local/moon_graph/graph",
+}
+
+pkgtype(kind: "executable")

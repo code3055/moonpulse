@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16 724 222" width="724" height="222" role="img" aria-label="data-pipeline">
+<title>data-pipeline</title>
+<defs><marker id="moon-graph-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#607088"/></marker></defs>
+<g data-node="source"><title>source</title><rect x="24" y="24" width="116" height="56" rx="6" fill="#eef4ff" stroke="#5174a5"/>
+<text x="82" y="56" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#172b4d">数据采集</text>
+</g>
+<g data-node="clean"><title>clean</title><rect x="200" y="24" width="116" height="56" rx="6" fill="#eef4ff" stroke="#5174a5"/>
+<text x="258" y="56" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#172b4d">清洗与校验</text>
+</g>
+<g data-node="store"><title>store</title><rect x="376" y="24" width="116" height="56" rx="6" fill="#eef4ff" stroke="#5174a5"/>
+<text x="434" y="56" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#172b4d">数据存储</text>
+</g>
+<g data-node="monitor"><title>monitor</title><rect x="376" y="110" width="116" height="56" rx="6" fill="#eef4ff" stroke="#5174a5"/>
+<text x="434" y="142" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#172b4d">质量监控</text>
+</g>
+<g data-node="report"><title>report</title><rect x="552" y="24" width="116" height="56" rx="6" fill="#eef4ff" stroke="#5174a5"/>
+<text x="610" y="56" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#172b4d">分析报表</text>
+</g>
+<path data-edge="ingest" d="M 140 52 L 152 52 L 188 52 L 200 52 " fill="none" stroke="#607088" stroke-width="1.5" marker-end="url(#moon-graph-arrow)"><title>ingest</title></path>
+<path data-edge="persist" d="M 316 52 L 328 52 L 364 52 L 376 52 " fill="none" stroke="#607088" stroke-width="1.5" marker-end="url(#moon-graph-arrow)"><title>persist</title></path>
+<path data-edge="metrics" d="M 315.30232558139534 80 L 315.30232558139534 92 L 315.30232558139534 98 L 376.69767441860466 98 L 376.69767441860466 110 " fill="none" stroke="#607088" stroke-width="1.5" marker-end="url(#moon-graph-arrow)"><title>metrics</title></path>
+<path data-edge="query" d="M 492 52 L 504 52 L 540 52 L 552 52 " fill="none" stroke="#607088" stroke-width="1.5" marker-end="url(#moon-graph-arrow)"><title>query</title></path>
+<path data-edge="health" d="M 491.30232558139534 110 L 491.30232558139534 98 L 491.30232558139534 92 L 552.6976744186046 92 L 552.6976744186046 80 " fill="none" stroke="#607088" stroke-width="1.5" marker-end="url(#moon-graph-arrow)"><title>health</title></path>
+</svg>
+

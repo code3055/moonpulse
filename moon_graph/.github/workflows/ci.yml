@@ -1,0 +1,30 @@
+name: Moon Graph checks
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install MoonBit
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - name: Verify MoonBit library
+        run: |
+          moon version
+          moon fmt --check
+          moon check --target wasm-gc
+          moon check --target js
+          moon test --target wasm-gc
+          moon test --target js
+          moon build --target wasm-gc
+      - name: Verify CLI and examples
+        run: |
+          npm run build
+          npm test
+          npm run examples

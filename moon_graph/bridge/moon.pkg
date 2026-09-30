@@ -1,0 +1,9 @@
+import {
+  "local/moon_graph/graph",
+}
+
+options(
+  link: {
+    "js": { "exports": [ "transform", "list_algorithms" ], "format": "esm" },
+  },
+)

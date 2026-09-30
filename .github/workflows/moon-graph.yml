@@ -1,0 +1,49 @@
+name: Verify Moon Graph
+
+on:
+  push:
+    paths:
+      - 'moon_graph/**'
+      - '.github/workflows/moon-graph.yml'
+  pull_request:
+    paths:
+      - 'moon_graph/**'
+      - '.github/workflows/moon-graph.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: moon_graph
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install MoonBit
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - name: Check and build both targets
+        run: |
+          moonc -v
+          moon version
+          moon fmt --check
+          moon check --target wasm-gc
+          moon check --target js
+          moon build --target wasm-gc
+          npm run build
+      - name: Test library, CLI and runnable examples
+        run: |
+          moon test --target wasm-gc
+          moon test --target js
+          npm test
+          npm run examples
+          moon run examples/api
+      - name: Verify publication archive locally
+        run: moon package --list

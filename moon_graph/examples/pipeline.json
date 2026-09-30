@@ -1,0 +1,18 @@
+{
+  "id": "data-pipeline",
+  "layoutOptions": { "elk.algorithm": "layered", "elk.direction": "RIGHT" },
+  "children": [
+    { "id": "source", "width": 116, "height": 56, "labels": [{ "text": "数据采集" }] },
+    { "id": "clean", "width": 116, "height": 56, "labels": [{ "text": "清洗与校验" }] },
+    { "id": "store", "width": 116, "height": 56, "labels": [{ "text": "数据存储" }] },
+    { "id": "monitor", "width": 116, "height": 56, "labels": [{ "text": "质量监控" }] },
+    { "id": "report", "width": 116, "height": 56, "labels": [{ "text": "分析报表" }] }
+  ],
+  "edges": [
+    { "id": "ingest", "sources": ["source"], "targets": ["clean"] },
+    { "id": "persist", "sources": ["clean"], "targets": ["store"] },
+    { "id": "metrics", "sources": ["clean"], "targets": ["monitor"] },
+    { "id": "query", "sources": ["store"], "targets": ["report"] },
+    { "id": "health", "sources": ["monitor"], "targets": ["report"] }
+  ]
+}

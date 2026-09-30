@@ -1,0 +1,17 @@
+{
+  "id": "retry-state-machine",
+  "layoutOptions": { "elk.algorithm": "layered", "elk.direction": "DOWN" },
+  "children": [
+    { "id": "ready", "labels": [{ "text": "待执行" }] },
+    { "id": "running", "labels": [{ "text": "执行中" }] },
+    { "id": "retry", "labels": [{ "text": "等待重试" }] },
+    { "id": "done", "labels": [{ "text": "完成" }] }
+  ],
+  "edges": [
+    { "id": "start", "sources": ["ready"], "targets": ["running"] },
+    { "id": "failed", "sources": ["running"], "targets": ["retry"] },
+    { "id": "again", "sources": ["retry"], "targets": ["running"] },
+    { "id": "success", "sources": ["running"], "targets": ["done"] },
+    { "id": "heartbeat", "sources": ["running"], "targets": ["running"] }
+  ]
+}

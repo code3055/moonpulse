@@ -1,0 +1,15 @@
+{
+  "name": "moon-graph",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Original MoonBit graph layout engine with a dependency-free Node.js CLI",
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "bin": { "moon-graph": "cli/moon-graph.mjs" },
+  "scripts": {
+    "build": "moon build --target js --release",
+    "test": "node --test cli/cli.test.mjs",
+    "examples": "node scripts/render-examples.mjs"
+  }
+}
