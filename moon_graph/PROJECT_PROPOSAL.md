@@ -6,6 +6,8 @@
 - 参赛者：待填写
 - 联系方式：待填写
 - GitHub 仓库链接：https://github.com/code3055/moonpulse（项目位于 moon_graph 子目录）
+- Mooncakes 包：code3055/moon_graph，已发布版本 0.1.0
+- 首次发布日期：2026-09-30
 - 项目方向：MoonBit 图布局基础库 / 可视化基础设施 / 开发者工具
 - 是否为移植项目：否，原创 MoonBit 实现，参考 ELK JSON 的数据组织方式
 - 项目许可证：MIT
@@ -26,7 +28,7 @@ Moon Graph 面向流程图、数据流水线、状态机和模块依赖图，提
 
 1. **层级图模型**：节点、复合节点、边、端口、文字标签与布局配置；容器局部坐标，全局 ID 唯一性检查。
 2. **五类布局**：layered、force、radial、box、fixed。分层算法包含有向环反馈排序、最长路径分层和重心排序；力导向算法提供种子与迭代次数；各类算法保留节点尺寸并按内容扩展容器。
-3. **边与端口**：四边端口、同侧均匀分配、正交和折线路由、自环，输出 ELK 风格 section 数据。
+3. **边与端口**：四边端口、同侧均匀分配、正交和折线路由、自环，输出 ELK 风格 section 数据；往返边共享通道分配以区分线路，无端口约束的重复边可沿节点外侧绕行，SVG 标签优先居中放置在较长水平线段上。
 4. **数据交换**：ELK JSON 风格的明确子集、紧凑 / 缩进输出、中文标签、自定义逐行文本输入，非法字段和未知选项明确报错。
 5. **统一 API**：new_elk_engine().layout、layout_json、parse_graph、graph_json、parse_text、render_svg、validate、algorithms。
 6. **端到端应用**：无第三方 npm 依赖的 Node.js CLI，可从文件 / stdin 读取并输出 JSON / SVG，支持根节点算法和方向覆盖。
@@ -52,9 +54,22 @@ Moon Graph 面向流程图、数据流水线、状态机和模块依赖图，提
 
 ## 验证方法与交付状态
 
-通过 MoonBit wasm-gc 和 JavaScript 两后端执行同一套核心测试，并通过 Node.js 子进程测试验证 stdin、文件路径、UTF-8、算法选择、层级图、环、SVG 转义及非零错误退出。测试命令和测试覆盖说明见 README 与 docs/TESTING.md；实际数量以执行结果为准，不以空断言或重复快照凑数。
+截至 2026-09-30，0.1.0 版本已完成以下核验：
 
-当前源码、示例、文档和 CLI 位于公开仓库 code3055/moonpulse 的 moon_graph 子目录。包名为 code3055/moon_graph，实际发布和安装核验记录见 docs/ACCEPTANCE.md；参赛者个人资料仍由本人填写。
+- **工具链**：使用 moonc 0.10.14，满足不低于 0.10.14 的要求。
+- **核心回归**：JavaScript 与 wasm-gc 两个目标各 382/382 项测试通过，覆盖五种算法、方向、层级、端口、路由、数据交换和错误边界。
+- **CLI 集成**：38/38 项真实子进程测试通过，覆盖 stdin、文件路径、UTF-8、算法选择、SVG 转义及退出码。
+- **正式发布**：code3055/moon_graph@0.1.0 已发布到 mooncakes；发布接口返回 200 OK，精确版本查询成功，本地上传归档与注册中心的 SHA256 一致。
+- **独立安装**：在源码仓库之外的新项目中从注册中心下载 0.1.0，未使用本地路径覆盖；布局、JSON、SVG、非法输入、算法列表和输入不变性六项使用方测试在两个目标上均为 6/6 通过。
+- **公开仓库与 CI**：源码、示例、文档和 CLI 位于公开仓库 code3055/moonpulse 的 moon_graph 子目录；发布配置提交 ef7ee70 对应的 Verify Moon Graph 工作流已确认通过。后续提交的 CI 结果应单独核验。
+
+在已有 MoonBit 项目中可通过以下命令安装：
+
+~~~sh
+moon add code3055/moon_graph
+~~~
+
+测试命令和覆盖说明见 README 与 docs/TESTING.md，验收对照见 docs/ACCEPTANCE.md，发布时间、校验和及独立安装证据见 docs/RELEASE-0.1.0.md。参赛者和联系方式仍由本人填写，不使用示例中的身份信息。
 
 ## 后续计划（未计入当前完成范围）
 
