@@ -8,7 +8,15 @@ MoonBit 原生图布局与 SVG 渲染工具，适用于流程图、数据流水�
 
 ## 快速运行
 
-环境：moonc 不低于 0.10.14；本项目验证版本为 moonc 0.10.14+7d59c7ec9、Moon CLI 0.1.20260920；Node.js 20 或以上。进入本目录：
+环境：moonc 不低于 0.10.14；本项目验证版本为 moonc 0.10.14+7d59c7ec9、Moon CLI 0.1.20260920；Node.js 20 或以上。
+
+**下面的所有命令都在 moon_graph 项目目录中执行。** 如果当前位于 moonpulse 仓库根目录，请先执行 cd moon_graph；如果已经位于 moon_graph，无需再次进入。在本机 PowerShell 中可直接执行：
+
+~~~powershell
+Set-Location E:\moonbit\moon_graph
+~~~
+
+确认当前目录包含 moon.mod、package.json 和 cli/moon-graph.mjs 后，再执行：
 
 ~~~sh
 moon check
@@ -22,6 +30,8 @@ moon run examples/api
 ~~~
 
 无需运行 npm install。npm run build 执行 moon build --target js --release，生成 CLI 使用的 ESM 桥接模块。直接运行默认 debug 构建不会更新 release 模块。
+
+若出现 Cannot find module 'E:\moonbit\cli\moon-graph.mjs'，表示当前目录仍在父仓库，先切换到 E:\moonbit\moon_graph 再运行。若错误提示无法加载 MoonBit bridge，则在项目目录中执行 npm run build。
 
 ## 实现的能力
 

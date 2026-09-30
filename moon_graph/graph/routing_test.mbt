@@ -143,6 +143,59 @@ test "zero padding routes remain within nonnegative geometry" {
 }
 
 ///|
+test "reciprocal edges receive separate lanes for both routing styles" {
+  for direction in ["RIGHT", "LEFT", "DOWN", "UP"] {
+    for routing in ["ORTHOGONAL", "POLYLINE"] {
+      let graph = @graph.new_graph()
+      graph.options["elk.direction"] = direction
+      graph.options["elk.edgeRouting"] = routing
+      graph.children.push(@graph.new_node("draft"))
+      graph.children.push(@graph.new_node("review"))
+      let forward = @graph.new_edge("submit", "draft", "review")
+      forward.labels.push({ text: "提交", })
+      let reverse = @graph.new_edge("revise", "review", "draft")
+      reverse.labels.push({ text: "修改", })
+      graph.edges.push(forward)
+      graph.edges.push(reverse)
+      let output = @graph.new_elk_engine().layout(graph)
+      let straight = output.edges[0].points[0]
+      let mut separate_lane = false
+      for point in output.edges[1].points {
+        if direction == "RIGHT" || direction == "LEFT" {
+          if point.y != straight.y {
+            separate_lane = true
+          }
+        } else if point.x != straight.x {
+          separate_lane = true
+        }
+      }
+      assert_true(separate_lane)
+      check_route_geometry(output)
+      assert_eq(output.edges[0].source, "draft")
+      assert_eq(output.edges[1].source, "review")
+    }
+  }
+}
+
+///|
+test "workflow return edge uses a clear overhead lane with separate anchors" {
+  let input = @graph.parse_text(
+    "edge submit draft review 提交\nedge accept review publish 通过\nedge revise review draft 修改\nnode draft 撰写文档\nnode review 内容评审\nnode publish 发布归档",
+  )
+  let output = @graph.new_elk_engine().layout(input)
+  let draft = output.children[0]
+  let review = output.children[1]
+  let points = output.edges[2].points
+  assert_eq(points.length(), 4)
+  assert_eq(points[0].y, review.y)
+  assert_eq(points[3].y, draft.y)
+  assert_true(points[1].y < review.y && points[1].y < draft.y)
+  assert_eq(points[1].y, points[2].y)
+  assert_true(points[1].x != points[2].x)
+  check_route_geometry(output)
+}
+
+///|
 test "overlapping fixed nodes retain positions with finite fallback routes" {
   let graph = @graph.new_graph()
   graph.options["elk.algorithm"] = "fixed"

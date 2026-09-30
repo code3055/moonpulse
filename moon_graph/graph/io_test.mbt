@@ -182,6 +182,38 @@ test "SVG viewbox includes negative fixed positions" {
 }
 
 ///|
+test "SVG edge label uses the longest horizontal segment rather than a corner" {
+  let graph = @graph.new_graph()
+  graph.children.push(@graph.new_node("a"))
+  graph.children.push(@graph.new_node("b"))
+  let edge = @graph.new_edge("e", "a", "b")
+  edge.labels.push({ text: "通过", })
+  edge.points = [
+    { x: 10.0, y: 10.0, },
+    { x: 10.0, y: 30.0, },
+    { x: 130.0, y: 30.0, },
+    { x: 130.0, y: 80.0, },
+    { x: 140.0, y: 80.0, },
+  ]
+  graph.edges.push(edge)
+  let svg = @graph.render_svg(graph)
+  assert_true(svg.contains("<text x=\"70\" y=\"24\""))
+}
+
+///|
+test "SVG vertical edge label leaves room between its text and the line" {
+  let graph = @graph.new_graph()
+  graph.children.push(@graph.new_node("a"))
+  graph.children.push(@graph.new_node("b"))
+  let edge = @graph.new_edge("e", "a", "b")
+  edge.labels.push({ text: "Yes", })
+  edge.points = [{ x: 10.0, y: 10.0, }, { x: 10.0, y: 90.0, }]
+  graph.edges.push(edge)
+  let svg = @graph.render_svg(graph)
+  assert_true(svg.contains("<text x=\"36\" y=\"54\""))
+}
+
+///|
 test "layout JSON integrates routing and pretty serialization" {
   let input = "{\"id\":\"r\",\"children\":[{\"id\":\"a\"},{\"id\":\"b\"}],\"edges\":[{\"id\":\"e\",\"sources\":[\"a\"],\"targets\":[\"b\"]}]}"
   let output = @graph.layout_json(input, pretty=true)

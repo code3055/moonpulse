@@ -15,7 +15,7 @@
 </g>
 <path data-edge="start" d="M 74 72 L 74 84 L 74 120 L 74 132 " fill="none" stroke="#607088" stroke-width="1.5" marker-end="url(#moon-graph-arrow)"><title>start</title></path>
 <path data-edge="failed" d="M 74 180 L 74 192 L 74 228 L 74 240 " fill="none" stroke="#607088" stroke-width="1.5" marker-end="url(#moon-graph-arrow)"><title>failed</title></path>
-<path data-edge="again" d="M 74 240 L 74 228 L 74 192 L 74 180 " fill="none" stroke="#607088" stroke-width="1.5" marker-end="url(#moon-graph-arrow)"><title>again</title></path>
+<path data-edge="again" d="M 24 264 L 12 264 L 12 156 L 24 156 " fill="none" stroke="#607088" stroke-width="1.5" marker-end="url(#moon-graph-arrow)"><title>again</title></path>
 <path data-edge="success" d="M 102.88888888888889 180 L 102.88888888888889 192 L 102.88888888888889 228 L 175.11111111111111 228 L 175.11111111111111 240 " fill="none" stroke="#607088" stroke-width="1.5" marker-end="url(#moon-graph-arrow)"><title>success</title></path>
 <path data-edge="heartbeat" d="M 124 156 L 144 156 L 144 200 L 74 200 L 74 180 " fill="none" stroke="#607088" stroke-width="1.5" marker-end="url(#moon-graph-arrow)"><title>heartbeat</title></path>
 </svg>

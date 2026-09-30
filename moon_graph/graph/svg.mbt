@@ -46,6 +46,42 @@ fn svg_escape(value : String) -> String {
 }
 
 ///|
+/// Choose a segment midpoint rather than the middle vertex index.
+/// Rendering and bounds share this position so offset labels are not clipped.
+fn svg_edge_label_position(edge : Edge) -> Point {
+  let mut start = edge.points[0]
+  let mut end = edge.points[1]
+  let mut best_length = -1.0
+  let mut best_horizontal = false
+  for i in 1..<edge.points.length() {
+    let a = edge.points[i - 1]
+    let b = edge.points[i]
+    let dx = absd(b.x - a.x)
+    let dy = absd(b.y - a.y)
+    let horizontal = dy < 0.000001 && dx > 0.000001
+    let length = (dx * dx + dy * dy).sqrt()
+    if (horizontal && !best_horizontal) ||
+      (horizontal == best_horizontal && length > best_length) {
+      start = a
+      end = b
+      best_length = length
+      best_horizontal = horizontal
+    }
+  }
+  let x = (start.x + end.x) / 2.0
+  let y = (start.y + end.y) / 2.0
+  if absd(start.x - end.x) < 0.000001 && absd(start.y - end.y) > 0.000001 {
+    let mut half_width = 0.0
+    for label in edge.labels {
+      half_width = maxd(half_width, label.text.char_length().to_double() * 6.0)
+    }
+    { x: x + half_width + 8.0, y: y + 4.0, }
+  } else {
+    { x, y: y - 6.0, }
+  }
+}
+
+///|
 fn svg_bounds(
   node : Node,
   ox : Double,
@@ -92,13 +128,12 @@ fn svg_bounds(
       bounds[3] = svg_max(bounds[3], y + p.y)
     }
     if edge.points.length() >= 2 {
-      let a = edge.points[(edge.points.length() - 1) / 2]
-      let b = edge.points[edge.points.length() / 2]
+      let position = svg_edge_label_position(edge)
       for index, label in edge.labels {
         svg_label_bounds(
           label.text,
-          x + (a.x + b.x) / 2.0,
-          y + (a.y + b.y) / 2.0 - 6.0 - index.to_double() * 14.0,
+          x + position.x,
+          y + position.y - index.to_double() * 14.0,
           bounds,
         )
       }
@@ -181,14 +216,13 @@ fn svg_node(
       out.write_string(
         "<path data-edge=\"\{svg_escape(edge.id)}\" d=\"\{path}\" fill=\"none\" stroke=\"#607088\" stroke-width=\"1.5\" marker-end=\"url(#moon-graph-arrow)\"><title>\{svg_escape(edge.id)}</title></path>\n",
       )
-      let a = edge.points[(edge.points.length() - 1) / 2]
-      let b = edge.points[edge.points.length() / 2]
+      let position = svg_edge_label_position(edge)
       for index, label in edge.labels {
         svg_label(
           out,
           label.text,
-          x + (a.x + b.x) / 2.0,
-          y + (a.y + b.y) / 2.0 - 6.0 - index.to_double() * 14.0,
+          x + position.x,
+          y + position.y - index.to_double() * 14.0,
         )
       }
     }

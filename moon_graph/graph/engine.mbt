@@ -80,9 +80,15 @@ fn route_edges(graph : Node, cfg : Config) -> Unit {
   for edge in graph.edges {
     let source = graph.children[indices[edge.source]]
     let target = graph.children[indices[edge.target]]
-    let pair = indices[edge.source].to_string() +
-      ":" +
-      indices[edge.target].to_string()
+    // Opposite directions share a lane counter so their routes do not overlap.
+    let source_index = indices[edge.source]
+    let target_index = indices[edge.target]
+    let (first, second) = if source_index < target_index {
+      (source_index, target_index)
+    } else {
+      (target_index, source_index)
+    }
+    let pair = first.to_string() + ":" + second.to_string()
     let lane = lanes.get(pair).unwrap_or(0)
     lanes[pair] = lane + 1
     edge.points = routed_points(edge, source, target, cfg, lane)

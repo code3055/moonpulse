@@ -245,6 +245,54 @@ fn routed_points(
     edge.target == target.id {
     return [start, end]
   }
+  // Unconstrained repeated edges use exterior sides, freeing the central lane.
+  // Explicit ports keep their requested sides and use the visibility router.
+  if lane > 0 && edge.source == source.id && edge.target == target.id {
+    let clearance = 12.0 * lane.to_double()
+    let vertical = cfg.direction == "DOWN" || cfg.direction == "UP"
+    if !vertical &&
+      (
+        source.x + source.width <= target.x ||
+        target.x + target.width <= source.x
+      ) {
+      let top = mind(source.y, target.y)
+      let above = top >= clearance
+      let track = if above {
+        top - clearance
+      } else {
+        maxd(source.y + source.height, target.y + target.height) + clearance
+      }
+      let sx = source.x + source.width / 2.0
+      let tx = target.x + target.width / 2.0
+      return [
+        { x: sx, y: if above { source.y } else { source.y + source.height }, },
+        { x: sx, y: track, },
+        { x: tx, y: track, },
+        { x: tx, y: if above { target.y } else { target.y + target.height }, },
+      ]
+    }
+    if vertical &&
+      (
+        source.y + source.height <= target.y ||
+        target.y + target.height <= source.y
+      ) {
+      let left = mind(source.x, target.x)
+      let before = left >= clearance
+      let track = if before {
+        left - clearance
+      } else {
+        maxd(source.x + source.width, target.x + target.width) + clearance
+      }
+      let sy = source.y + source.height / 2.0
+      let ty = target.y + target.height / 2.0
+      return [
+        { x: if before { source.x } else { source.x + source.width }, y: sy, },
+        { x: track, y: sy, },
+        { x: track, y: ty, },
+        { x: if before { target.x } else { target.x + target.width }, y: ty, },
+      ]
+    }
+  }
   let first = route_lead(source, target, start, start_side, 12.0)
   let last = route_lead(target, source, end, end_side, 12.0)
   let path = [start]
