@@ -1,6 +1,6 @@
 # Implementation contract
 
-Module local/moon_graph; library package local/moon_graph/graph.
+Module code3055/moon_graph; library package code3055/moon_graph/graph.
 Original MoonBit implementation inspired by the ELK JSON data shape, NOT a full ELK port. MIT. No third-party dependencies.
 
 Public model in graph/model.mbt is the shared interface. Node is both root and compound node. Edges belong to their enclosing Node and connect direct children or their ports, globally unique identifiers across nodes/edges/ports. Cross-container edges and hyperedges are rejected explicitly. Labels contain text. Points are container-local.

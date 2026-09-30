@@ -5,7 +5,7 @@
 - 项目名称：Moon Graph：MoonBit 原生层级图布局与可视化引擎
 - 参赛者：待填写
 - 联系方式：待填写
-- GitHub 仓库链接：待填写（当前交付为本地独立目录 moon_graph）
+- GitHub 仓库链接：https://github.com/code3055/moonpulse（项目位于 moon_graph 子目录）
 - 项目方向：MoonBit 图布局基础库 / 可视化基础设施 / 开发者工具
 - 是否为移植项目：否，原创 MoonBit 实现，参考 ELK JSON 的数据组织方式
 - 项目许可证：MIT
@@ -54,7 +54,7 @@ Moon Graph 面向流程图、数据流水线、状态机和模块依赖图，提
 
 通过 MoonBit wasm-gc 和 JavaScript 两后端执行同一套核心测试，并通过 Node.js 子进程测试验证 stdin、文件路径、UTF-8、算法选择、层级图、环、SVG 转义及非零错误退出。测试命令和测试覆盖说明见 README 与 docs/TESTING.md；实际数量以执行结果为准，不以空断言或重复快照凑数。
 
-当前源码、示例、文档和 CLI 均位于独立 moon_graph 文件夹；未代替参赛者创建远程仓库或填写个人信息。
+当前源码、示例、文档和 CLI 位于公开仓库 code3055/moonpulse 的 moon_graph 子目录。包名为 code3055/moon_graph，实际发布和安装核验记录见 docs/ACCEPTANCE.md；参赛者个人资料仍由本人填写。
 
 ## 后续计划（未计入当前完成范围）
 
@@ -62,4 +62,4 @@ Moon Graph 面向流程图、数据流水线、状态机和模块依赖图，提
 - 改进标签尺寸测量、避障路由和交叉优化。
 - 建立与选定 ELK / elkjs 版本的参考对比数据集，明确比较指标，而非要求像素级一致。
 - 增加浏览器交互示例、性能基准和资源预算选项。
-- 在稳定 API 后发布可复用 MoonBit 包。
+- 持续维护公开 API，并按版本更新可复用 MoonBit 包。

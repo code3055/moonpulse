@@ -1,5 +1,5 @@
 import {
-  "local/moon_graph/graph",
+  "code3055/moon_graph/graph",
 }
 
 pkgtype(kind: "executable")

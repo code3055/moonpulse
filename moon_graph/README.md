@@ -65,7 +65,21 @@ CLI 先解析并验证原始图，再应用根节点覆盖参数；覆盖参数�
 
 ## MoonBit API
 
-在 moon.pkg 中导入 local/moon_graph/graph，可直接运行完整样例 examples/api/main.mbt：
+在已有 MoonBit 项目目录中安装依赖：
+
+~~~sh
+moon add code3055/moon_graph
+~~~
+
+在调用方的 moon.pkg 中声明导入：
+
+~~~text
+import {
+  "code3055/moon_graph/graph",
+}
+~~~
+
+库包路径为 code3055/moon_graph/graph；源码仓库中的完整样例位于 examples/api/main.mbt：
 
 ~~~moonbit
 let graph = @graph.new_graph()
@@ -157,8 +171,8 @@ MIT 许可证。项目中未复制 ELK / elkjs 实现代码。ELK 是参考生�
 
 ## 验收和发布状态
 
-本地核验清单见 [ACCEPTANCE.md](docs/ACCEPTANCE.md)。当前源码与测试可在本地复现，尚未发布本项目的 GitHub 提交或 mooncakes 包；不要把本地打包成功视为发布完成。
+核验清单见 [ACCEPTANCE.md](docs/ACCEPTANCE.md)。源码位于公开仓库 code3055/moonpulse 的 moon_graph 子目录。code3055/moon_graph 的 0.1.0 已发布到 mooncakes，并在仓库外的新项目中完成下载安装及两种目标的 API 测试。注册中心的版本记录可通过 moon view code3055/moon_graph --versions 查询；发布证据见 [RELEASE-0.1.0.md](docs/RELEASE-0.1.0.md)。
 
 当前嵌套仓库使用父目录的 .github/workflows/moon-graph.yml；若将本文件夹作为独立仓库根目录，使用本目录自带的 .github/workflows/ci.yml。两种配置都覆盖检查、构建、测试。实际 CI 成功记录须在上传之后核实。
 
-发布前须将 moon.mod 中 local/moon_graph 换成自己拥有的 mooncakes 用户名或组织名，并同步替换 bridge/moon.pkg 和 examples/api/moon.pkg 的导入路径，填写真实 repository。详细步骤见 [PUBLISHING.md](docs/PUBLISHING.md)。
+moon.mod 和包导入路径使用已确认的 code3055 命名空间；repository 指向真实 GitHub 仓库。维护者发布和独立安装验证步骤见 [PUBLISHING.md](docs/PUBLISHING.md)。
